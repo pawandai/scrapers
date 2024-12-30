@@ -1,7 +1,7 @@
 # nepse-data
 
 ## Usage
-
+Clone the repository and run following commands
 ```bash
 # go into the src folder
 cd src
@@ -17,3 +17,6 @@ python3 allDataScrapper.py
 python3 dailyDataScrapper.py
 
 ```
+
+## Alternative method
+If above method did not work, fork this repository and enable github actions and scrape data from github
