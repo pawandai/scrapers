@@ -3,3 +3,7 @@ requests==2.31.0
 lxml==4.9.1
 beautifulsoup4==4.9.3
 black
+urllib3
+wasmtime
+retrying
+setuptools
