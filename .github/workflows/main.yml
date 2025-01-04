@@ -18,9 +18,9 @@ jobs:
           python-version: "3.8" # Version range or exact version of a Python version to use, using SemVer's version range syntax
           node-version: "20"
       - name: Install packages
-        run: pip install -r requirements.txt
+        run: pip install -r requirements.txt && npm install
       - name: Run updater
-        run: python dailyDataScrapper.py
+        run: python dailyDataScrapper.py && node ../../data/news/scraper.js
       - name: Setup Git
         run: git config --local user.email "pawanawasthi481@gmail.com" && git config --local user.name "Pawan Awasthi"
       - name: Commit Files
