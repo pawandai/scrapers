@@ -20,7 +20,7 @@ jobs:
       - name: Install packages
         run: pip install -r requirements.txt && npm install
       - name: Run updater
-        run: python dailyDataScrapper.py && node ../../data/news/scraper.js
+        run: python dailyDataScrapper.py && node ../data/news/scraper.js
       - name: Setup Git
         run: git config --local user.email "pawanawasthi481@gmail.com" && git config --local user.name "Pawan Awasthi"
       - name: Commit Files

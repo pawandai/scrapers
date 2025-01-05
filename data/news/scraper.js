@@ -96,37 +96,32 @@ const runScraper = async () => {
     append: true, // Append to the file after headers are written
   });
 
-  const startDate = new Date("2011-03-25");
-  const endDate = new Date();
-  let currentDate = new Date(startDate);
+  const currentDate = new Date();
 
-  while (currentDate <= endDate) {
-    try {
-      const newsItems = await scrapeNewsForDate(page, currentDate);
-      const newItems = newsItems.filter(
-        (item) => !existingTitles.has(`${item.date}-${item.title}`)
+  try {
+    const newsItems = await scrapeNewsForDate(page, currentDate);
+    const newItems = newsItems.filter(
+      (item) => !existingTitles.has(`${item.date}-${item.title}`)
+    );
+
+    if (newItems.length > 0) {
+      await csvWriter.writeRecords(newItems);
+      console.log(
+        `Added ${newItems.length} news items for ${formatDate(currentDate)}`
       );
 
-      if (newItems.length > 0) {
-        await csvWriter.writeRecords(newItems);
-        console.log(
-          `Added ${newItems.length} news items for ${formatDate(currentDate)}`
-        );
-
-        // Add new items to the existing titles set
-        newItems.forEach((item) =>
-          existingTitles.add(`${item.date}-${item.title}`)
-        );
-      } else {
-        console.log(`No new news items for ${formatDate(currentDate)}`);
-      }
-    } catch (error) {
-      console.error(
-        `Error scraping data for ${formatDate(currentDate)}:`,
-        error.message
+      // Add new items to the existing titles set
+      newItems.forEach((item) =>
+        existingTitles.add(`${item.date}-${item.title}`)
       );
+    } else {
+      console.log(`No new news items for ${formatDate(currentDate)}`);
     }
-    currentDate.setDate(currentDate.getDate() + 1);
+  } catch (error) {
+    console.error(
+      `Error scraping data for ${formatDate(currentDate)}:`,
+      error.message
+    );
   }
 
   await browser.close();
