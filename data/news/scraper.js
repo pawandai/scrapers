@@ -50,7 +50,8 @@ const readExistingTitles = async (filePath) => {
     fs.createReadStream(filePath)
       .pipe(csvParser())
       .on("data", (row) => {
-        titles.add(`${row.Date}-${row.Title}`); // Adjust keys to match CSV headers
+        // Ensure the keys match the CSV headers
+        titles.add(`${row.Date.trim()}-${row.Title.trim()}`);
       })
       .on("end", () => resolve(titles))
       .on("error", reject);
@@ -100,8 +101,10 @@ const runScraper = async () => {
 
   try {
     const newsItems = await scrapeNewsForDate(page, currentDate);
+
+    // Filter new items based on both date and title
     const newItems = newsItems.filter(
-      (item) => !existingTitles.has(`${item.date}-${item.title}`)
+      (item) => !existingTitles.has(`${item.date.trim()}-${item.title.trim()}`)
     );
 
     if (newItems.length > 0) {
@@ -112,7 +115,7 @@ const runScraper = async () => {
 
       // Add new items to the existing titles set
       newItems.forEach((item) =>
-        existingTitles.add(`${item.date}-${item.title}`)
+        existingTitles.add(`${item.date.trim()}-${item.title.trim()}`)
       );
     } else {
       console.log(`No new news items for ${formatDate(currentDate)}`);
