@@ -4,9 +4,6 @@ on:
     # Runs "at 18:45 (Nepal Time), every Monday to Friday
     - cron: "0 13,14,15,16,17 * * 0,1,2,3,4,5"
   workflow_dispatch:
-defaults:
-  run:
-    working-directory: ./src
 jobs:
   update-daily-data:
     name: update-daily-data
@@ -20,11 +17,11 @@ jobs:
       - name: Install packages
         run: pip install -r requirements.txt && npm install
       - name: Run updater
-        run: python dailyDataScrapper.py && node ../data/news/scraper.js
+        run: python dailyDataScrapper.py && node /data/news/scraper.js
       - name: Setup Git
         run: git config --local user.email "pawanawasthi481@gmail.com" && git config --local user.name "Pawan Awasthi"
       - name: Commit Files
-        run: git add . && git add ../data && git stage ../data && git commit -m "Update data"
+        run: git add . && git add /data && git stage /data && git commit -m "Update data"
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
