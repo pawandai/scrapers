@@ -1,0 +1,4 @@
+src/venv
+.DS_Store
+myenv
+node_modules
