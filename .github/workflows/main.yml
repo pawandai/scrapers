@@ -1,8 +1,8 @@
 name: update-companies-data
 on:
   schedule:
-    # Runs at 21:28 (Nepal Time), every Sunday to Thursday
-    - cron: "59 15 * * 0-4"
+    # Runs at 21:35 (Nepal Time), every Sunday to Thursday
+    - cron: "50 15 * * 0-4"
   workflow_dispatch:
 jobs:
   update-daily-data:
@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
-          python-version: "3.8" # Version range or exact version of a Python version to use, using SemVer's version range syntax
+          python-version: "3.8"
           node-version: "20"
       - name: Install packages
         run: npm install
