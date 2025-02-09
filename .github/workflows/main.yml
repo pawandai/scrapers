@@ -2,7 +2,7 @@ name: update-companies-data
 on:
   schedule:
     # Runs "at 18:45 (Nepal Time), every Sunday to Thrusday
-    - cron: "0 13,14,15,16,17 * * 0,1,2,3,4,5"
+    - cron: "10 21 * * 0-4"
   workflow_dispatch:
 jobs:
   update-daily-data:
