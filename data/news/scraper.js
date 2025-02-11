@@ -50,9 +50,8 @@ const readExistingTitles = async (filePath) => {
     fs.createReadStream(filePath)
       .pipe(csvParser())
       .on("data", (row) => {
-        if (row.Date && row.Title) {
-          titles.add(`${row.Date.trim()}-${row.Title.trim()}`);
-        }
+        // Ensure the keys match the CSV headers
+        titles.add(`${row.Date.trim()}-${row.Title.trim()}`);
       })
       .on("end", () => resolve(titles))
       .on("error", reject);
@@ -78,11 +77,7 @@ const initializeCsvFile = async (filePath) => {
 
 // Main function to run the scraper
 const runScraper = async () => {
-  // Updated launch options for GitHub Actions environment
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-  });
+  const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
   const filePath = "./data/news/raw_news.csv";
 
@@ -102,7 +97,6 @@ const runScraper = async () => {
     append: true, // Append to the file after headers are written
   });
 
-  // Use the fixed date for scraping
   const currentDate = new Date();
 
   try {
