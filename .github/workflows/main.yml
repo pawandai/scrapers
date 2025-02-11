@@ -12,8 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
-          python-version: "3.8"
-          node-version: "20"
+          node-version: "22"
       - name: Install packages
         run: npm install
       - name: Run updater
